@@ -5,8 +5,8 @@ Main base :
 local framework = require("UToolkit/_UToolkit")
 
 function love.load()
-  cam = framework.createCamera(0,0, 800, 600)
-  framework.setCamera(cam)
+    cam = framework.createCamera(0,0, 800, 600)
+    framework.setCamera(cam)
 end
 
 function love.update(dt)
