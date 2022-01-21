@@ -2,7 +2,7 @@
 Main base :
 
 ``` lua
-local framework = require("UToolkit/_UToolkit")
+local framework = require("UToolkit/_utoolkit")
 
 function love.load()
     cam = framework.createCamera(0,0, 800, 600)
