@@ -2,18 +2,18 @@
 Main base :
 
 ``` lua
-local framework = require("UToolkit/_utoolkit")
+local U = require("UToolkit/_utoolkit")
 
 function love.load()
-    cam = framework.createCamera(0,0, 800, 600)
-    framework.setCamera(cam)
+    cam = U.createCamera(0,0, 800, 600)
+    U.setCamera(cam)
 end
 
 function love.update(dt)
-    framework.update(dt)
+    U.update(dt)
 end
 
 function love.draw()
-    framework.draw()
+    U.draw()
 end
 ```
