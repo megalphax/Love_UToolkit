@@ -1,15 +1,16 @@
-F = {}
+UTK = {}
 
-require("framework/updateAndTimedEvents")
-require("framework/camera")
-require("framework/gameobjects")
+require("UToolkit/updateAndTimedEvents")
+require("UToolkit/camera")
+require("UToolkit/gameobjects")
+require("UToolkit/debug")
 
-function F.update(dt)
-    F.updateAll(dt)
+function UTK.update(dt)
+    UTK.updateAll(dt)
 end
 
-function F.draw()
-    F.drawAll()
+function UTK.draw()
+    UTK.drawAll()
 end
 
-return F;
+return UTK;

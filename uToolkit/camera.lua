@@ -1,49 +1,79 @@
-F.camera = {}
+UTK.camera = {}
+UTK.window = {}
+UTK.graphics = {}
 
-F.camera.autocenterTextures = true
-F.camera.offsetX = 0
-F.camera.offsetY = 0
+UTK.camera.autocenterTextures = true
+UTK.camera.offsetX = 0
+UTK.camera.offsetY = 0
 
-F.world = {
+UTK.window.originalSizeX = 800
+UTK.window.originalSizeY = 600
+UTK.window.aspectRatioX = 1
+UTK.window.aspectRatioY = 1
+UTK.window.adjustedSizeX = UTK.window.originalSizeX
+UTK.window.adjustedSizeY = UTK.window.originalSizeY
+
+function UTK.window.setMode(pX, pY, pFlags)
+    if pFlags == nil then pFlags = {} end
+    UTK.window.aspectRatioX = (pX + UTK.window.originalSizeX) / UTK.window.originalSizeX -1
+    UTK.window.aspectRatioY = (pY + UTK.window.originalSizeY) / UTK.window.originalSizeY -1
+    UTK.window.adjustedSizeX = UTK.window.originalSizeX * UTK.window.aspectRatioX
+    UTK.window.adjustedSizeY = UTK.window.originalSizeY * UTK.window.aspectRatioY
+    love.window.setMode(pX, pY, pFlags)
+end
+
+UTK.world = {
     x = 0,
     y = 0
 }
 
-function F.drawRelativeToWorld(pDrawable, pX, pY, pR, pScaleX, pScaleY, pOriginX, pOriginY)
+function UTK.graphics.drawRelativeToWorld(pDrawable, pX, pY, pR, pScaleX, pScaleY, pOriginX, pOriginY)
     local d = {}
-    d.x = pX - F.camera.offsetX
-    d.y = pY - F.camera.offsetY
+    d.x = pX*UTK.window.aspectRatioX - UTK.camera.offsetX
+    d.y = pY*UTK.window.aspectRatioY - UTK.camera.offsetY
 
     if pScaleX ~= nil then d.scaleX = pScaleX else d.scaleX = 1 end
     if pScaleY ~= nil then d.scaleY = pScaleY else d.scaleY = 1 end
     if pR ~= nil then d.rotation = pR else d.rotation = 0 end
-    if pOriginX ~= nil then d.originX = pOriginX elseif F.camera.autocenterTextures == true then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
-    if pOriginY ~= nil then d.originY = pOriginY elseif F.camera.autocenterTextures == true then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
+    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures == true then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
+    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures == true then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
     
-    love.graphics.draw(pDrawable, d.x, d.y, d.rotation, d.scaleX, d.scaleY, d.originX, d.originY)
+    love.graphics.draw(pDrawable, d.x, d.y, d.rotation, d.scaleX*UTK.window.aspectRatioX, d.scaleY*UTK.window.aspectRatioY, d.originX, d.originY)
 end
 
-function F.createCamera(pX, pY, pScreenSizeX, pScreenSizeY)
+function UTK.graphics.draw(pDrawable, pX, pY, pR, pScaleX, pScaleY, pOriginX, pOriginY)
+    local d = {}
+    d.x = pX
+    d.y = pY
+
+    if pScaleX ~= nil then d.scaleX = pScaleX else d.scaleX = 1 end
+    if pScaleY ~= nil then d.scaleY = pScaleY else d.scaleY = 1 end
+    if pR ~= nil then d.rotation = pR else d.rotation = 0 end
+    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures == true then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
+    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures == true then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
+    
+    love.graphics.draw(pDrawable, d.x, d.y, d.rotation, d.scaleX*UTK.camera, d.scaleY, d.originX, d.originY)
+end
+
+function UTK.createCamera(pX, pY)
     local cam = {}
     cam.x = pX -- Center X
     cam.y = pY -- Center Y
-    cam.sizeX = pScreenSizeX
-    cam.sizeY = pScreenSizeY
 
     return cam
 end
 
-function F.setCamera(pCam)
+function UTK.setCamera(pCam)
     currentCamera = pCam
 end
 
-function F.camera:localUpdate (dt)
+function UTK.camera:localUpdate (dt)
     if currentCamera ~= nil then
-        F.camera.offsetX = (currentCamera.x - currentCamera.sizeX/2) + F.world.x
-        F.camera.offsetY = (currentCamera.y - currentCamera.sizeY/2)+ F.world.y
+        UTK.camera.offsetX = (currentCamera.x*UTK.window.aspectRatioX - love.graphics.getWidth()/2) + UTK.world.x
+        UTK.camera.offsetY = (currentCamera.y*UTK.window.aspectRatioY - love.graphics.getHeight()/2)+ UTK.world.y
     end
 end
-F.addLocalUpdate(F.camera)
+UTK.addLocalUpdate(UTK.camera)
 
 --[[
 function camera:localDraw()
