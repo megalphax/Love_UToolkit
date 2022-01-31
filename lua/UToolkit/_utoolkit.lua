@@ -1,9 +1,10 @@
 UTK = {}
 
+require("UToolkit/debug")
 require("UToolkit/updateAndTimedEvents")
 require("UToolkit/camera")
 require("UToolkit/gameobjects")
-require("UToolkit/debug")
+require("UToolkit/ui")
 
 function UTK.update(dt)
     UTK.updateAll(dt)

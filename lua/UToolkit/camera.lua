@@ -27,6 +27,19 @@ UTK.world = {
     y = 0
 }
 
+function UTK.graphics.rectangleRelativeToWorld(pDrawmode, pX, pY, pScaleX, pScaleY)
+
+    local r = {}
+    r.x = pX*UTK.window.aspectRatioX - UTK.camera.offsetX
+    r.y = pY*UTK.window.aspectRatioY - UTK.camera.offsetY
+
+    if pScaleX ~= nil then r.scaleX = pScaleX else r.scaleX = 1 end
+    if pScaleY ~= nil then r.scaleY = pScaleY else r.scaleY = 1 end
+    
+    love.graphics.rectangle(pDrawmode, r.x, r.y, r.scaleX*UTK.window.aspectRatioX, r.scaleY*UTK.window.aspectRatioY)
+
+end
+
 function UTK.graphics.drawRelativeToWorld(pDrawable, pX, pY, pR, pScaleX, pScaleY, pOriginX, pOriginY)
     local d = {}
     d.x = pX*UTK.window.aspectRatioX - UTK.camera.offsetX
