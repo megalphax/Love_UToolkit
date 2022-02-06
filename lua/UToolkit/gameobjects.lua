@@ -40,6 +40,9 @@ function UTK.newGameObject(pName, pX, pY)
                 local c2 = UTK.CollidersList[i]
                 if c1 ~= c2 and UTK.CheckCollision(gameobject.collider.x+pX-gameobject.x, gameobject.collider.y+pY-gameobject.y, c1.sizeX, c1.sizeY, c2.x, c2.y, c2.sizeX, c2.sizeY) then
                     if UTK.getCollidersGroupRule(c1.colliderGroup, c2.colliderGroup) == "block" then
+                        --if pY > gameobject.y and pY < c2.y then
+                        --    gameobject.y = gameobject.y + (c2.y - gameobject.y - c1.sizeY/2)
+                        --end
                         canMove = false
                     end
                 end

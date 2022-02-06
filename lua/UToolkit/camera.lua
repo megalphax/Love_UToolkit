@@ -48,8 +48,8 @@ function UTK.graphics.drawRelativeToWorld(pDrawable, pX, pY, pR, pScaleX, pScale
     if pScaleX ~= nil then d.scaleX = pScaleX else d.scaleX = 1 end
     if pScaleY ~= nil then d.scaleY = pScaleY else d.scaleY = 1 end
     if pR ~= nil then d.rotation = pR else d.rotation = 0 end
-    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures == true then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
-    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures == true then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
+    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
+    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
     
     love.graphics.draw(pDrawable, d.x, d.y, d.rotation, d.scaleX*UTK.window.aspectRatioX, d.scaleY*UTK.window.aspectRatioY, d.originX, d.originY)
 end
@@ -62,8 +62,8 @@ function UTK.graphics.draw(pDrawable, pX, pY, pR, pScaleX, pScaleY, pOriginX, pO
     if pScaleX ~= nil then d.scaleX = pScaleX else d.scaleX = 1 end
     if pScaleY ~= nil then d.scaleY = pScaleY else d.scaleY = 1 end
     if pR ~= nil then d.rotation = pR else d.rotation = 0 end
-    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures == true then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
-    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures == true then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
+    if pOriginX ~= nil then d.originX = pOriginX elseif UTK.camera.autocenterTextures then d.originX = pDrawable:getWidth()/2 else d.originX = 0 end
+    if pOriginY ~= nil then d.originY = pOriginY elseif UTK.camera.autocenterTextures then d.originY = pDrawable:getHeight()/2 else d.originX = 0 end
     
     love.graphics.draw(pDrawable, d.x, d.y, d.rotation, d.scaleX*UTK.camera, d.scaleY, d.originX, d.originY)
 end
